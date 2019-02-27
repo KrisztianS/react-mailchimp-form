@@ -24,9 +24,9 @@ class Mailchimp extends React.Component {
       if (data.msg.includes("already subscribed")) {
         this.setState({ status: 'duplicate' });
       } else if (err) {
-        this.setState({ status: 'error' });
+        this.setState({ status: 'error', error_message: data.msg });
       } else if (data.result !== 'success') {
-        this.setState({ status: 'error' });
+        this.setState({ status: 'error', error_message: data.msg });
       } else {
         this.setState({ status: 'success' });
       };
@@ -39,7 +39,7 @@ class Mailchimp extends React.Component {
       ...Mailchimp.defaultProps.messages,
       ...this.props.messages
     }
-    const { status } = this.state;
+    const { status, error_message } = this.state;
     return (
       <form onSubmit={this.handleSubmit.bind(this)} className={className}>
         {fields.map(input =>
@@ -62,7 +62,7 @@ class Mailchimp extends React.Component {
           {status === "success" && <p style={styles.successMsg}>{messages.success}</p>}
           {status === "duplicate" && <p style={styles.duplicateMsg}>{messages.duplicate}</p>}
           {status === "empty" && <p style={styles.errorMsg}>{messages.empty}</p>}
-          {status === "error" && <p style={styles.errorMsg}>{messages.error}</p>}
+          {status === "error" && <p style={styles.errorMsg}>{error_message || messages.error}</p>}
         </div>
       </form>
     );
