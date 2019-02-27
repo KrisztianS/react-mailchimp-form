@@ -62,7 +62,7 @@ class Mailchimp extends React.Component {
           {status === "success" && <p style={styles.successMsg}>{messages.success}</p>}
           {status === "duplicate" && <p style={styles.duplicateMsg}>{messages.duplicate}</p>}
           {status === "empty" && <p style={styles.errorMsg}>{messages.empty}</p>}
-          {status === "error" && <p style={styles.errorMsg}>{error_message || messages.error}</p>}
+          {status === "error" && <p style={styles.errorMsg}>{`${error_message} ${messages.error}`}</p>}
         </div>
       </form>
     );
